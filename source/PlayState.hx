@@ -124,6 +124,7 @@ class PlayState extends MusicBeatState
 
 	private var gfSpeed:Int = 1;
 	private var health:Float = 1;
+	private var healthscare:Float = 1;
 	private var combo:Int = 0;
 	public static var misses:Int = 0;
 	private var accuracy:Float = 0.00;
@@ -875,7 +876,7 @@ class PlayState extends MusicBeatState
 					forestBallBGs.scrollFactor.set(0.9, 0.9);
 					forestBallBGs.setGraphicSize(Std.int(forestBallBGs.width * 1));
 					forestBallBGs.updateHitbox();
-					add(forestBallBGs);
+					
 
 					forestBallhellBGs = new FlxSprite(-70, 425);
 					forestBallhellBGs.frames = Paths.getSparrowAtlas('forest/dancingballs');
@@ -885,7 +886,7 @@ class PlayState extends MusicBeatState
 					forestBallhellBGs.setGraphicSize(Std.int(forestBallhellBGs.width * 1));
 					forestBallhellBGs.updateHitbox();
 					forestBallhellBGs.alpha = 0.0;
-					add(forestBallhellBGs);
+					
 					
 					var forestGround:FlxSprite = new FlxSprite(-580, 600).loadGraphic(Paths.image('forest/ground'));
 					forestGround.setGraphicSize(Std.int(forestGround.width * 1));
@@ -894,6 +895,7 @@ class PlayState extends MusicBeatState
 					forestGround.scrollFactor.set(0.9, 0.9);
 					forestGround.active = false;
 					add(forestGround);
+					add(forestBallBGs);
 
 					//var foresthellGround:FlxSprite = new FlxSprite(-580, 600).loadGraphic(Paths.image('forest/groundhell'));
 					foresthellGround = new FlxSprite(-580, 600).loadGraphic(Paths.image('forest/groundhell'));
@@ -904,6 +906,7 @@ class PlayState extends MusicBeatState
 					foresthellGround.active = false;
 					foresthellGround.alpha = 0.0;
 					add(foresthellGround);
+					add(forestBallhellBGs);
 			}
 		}
 		var gfVersion:String = 'gf';
@@ -2563,11 +2566,15 @@ class PlayState extends MusicBeatState
 
 					case 303:
 						staticOverlay.color = FlxColor.WHITE;
+						healthscare = health;
 						healthDrainRate = 0.0008;
 						setChrome(0.01);
 
 						//FlxG.camera.shake(0.002, 5.5);
 						//camHUD.shake((0.004), 5.5);
+
+					case 304:
+						health = 0.55;
 
 					case 309:
 						hellBG.alpha = 0.5;
@@ -2586,6 +2593,7 @@ class PlayState extends MusicBeatState
 						shaking = false;
 						forestBallhellBGs.alpha = 0.0;
 						foresthellGround.alpha = 0.0;
+						health = healthscare;
 
 					case 448:
 						remove(dad);
