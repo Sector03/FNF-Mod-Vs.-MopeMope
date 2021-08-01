@@ -25,6 +25,9 @@ class MusicBeatState extends FlxUIState
 	inline function get_controls():Controls
 		return PlayerSettings.player1.controls;
 
+	public function setChrome(daChrome:Float):Void
+		ShadersHandler.setChrome(daChrome);
+
 	override function create()
 	{
 		(cast (Lib.current.getChildAt(0), Main)).setFPSCap(FlxG.save.data.fpsCap);

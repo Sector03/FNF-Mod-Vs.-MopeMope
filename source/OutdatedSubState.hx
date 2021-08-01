@@ -19,11 +19,11 @@ class OutdatedSubState extends MusicBeatState
 		var bg:FlxSprite = new FlxSprite().makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
 		add(bg);
 		var txt:FlxText = new FlxText(0, 0, FlxG.width,
-			"Kade Engine is Outdated!\n"
-			+ MainMenuState.kadeEngineVer
-			+ " is your current version\nwhile the most recent version is " + needVer
-			+ "!\nPress Space to go to the github or ESCAPE to ignore this!!",
-			32);
+			"This mod contains:\n"
+			+ " \n"
+			+ "Flashy and disturbing imagery\n"
+			+ "YOU HAVE BEEN WARNED"
+			,32);
 		txt.setFormat("VCR OSD Mono", 32, FlxColor.WHITE, CENTER);
 		txt.screenCenter();
 		add(txt);
@@ -33,7 +33,8 @@ class OutdatedSubState extends MusicBeatState
 	{
 		if (controls.ACCEPT)
 		{
-			FlxG.openURL("https://github.com/KadeDev/Kade-Engine/releases/latest");
+			leftState = true;
+			FlxG.switchState(new MainMenuState());
 		}
 		if (controls.BACK)
 		{

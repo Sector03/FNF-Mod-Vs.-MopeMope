@@ -133,6 +133,10 @@ class PlayState extends MusicBeatState
 	private var totalPlayed:Int = 0;
 	private var ss:Bool = false;
 
+	public var godmodecheat:Bool = false;
+
+	public var healthDrainRate:Float = 0;
+	public var shaking:Bool = false;
 
 	private var healthBarBG:FlxSprite;
 	private var healthBar:FlxBar;
@@ -143,6 +147,7 @@ class PlayState extends MusicBeatState
 
 	private var iconP1:HealthIcon;
 	private var iconP2:HealthIcon;
+	private var camOverlay:FlxCamera;
 	private var camHUD:FlxCamera;
 	private var camGame:FlxCamera;
 
@@ -167,6 +172,14 @@ class PlayState extends MusicBeatState
 	var upperBoppers:FlxSprite;
 	var bottomBoppers:FlxSprite;
 	var santa:FlxSprite;
+
+	var forestBallBGs:FlxSprite;
+	var foresthellGround:FlxSprite;
+	var forestBallhellBGs:FlxSprite;
+	var hellBG:FlxSprite;
+	var staticOverlay:FlxSprite;
+	var chromeOffset:Float = 0;
+
 
 	var fc:Bool = true;
 
@@ -415,6 +428,8 @@ class PlayState extends MusicBeatState
 		repPresses = 0;
 		repReleases = 0;
 
+		setChrome(0.0);
+
 		#if sys
 		executeModchart = FileSystem.exists(Paths.lua(PlayState.SONG.song.toLowerCase()  + "/modchart"));
 		#end
@@ -471,9 +486,12 @@ class PlayState extends MusicBeatState
 		camGame = new FlxCamera();
 		camHUD = new FlxCamera();
 		camHUD.bgColor.alpha = 0;
+		camOverlay = new FlxCamera();
+		camOverlay.bgColor.alpha = 0;
 
 		FlxG.cameras.reset(camGame);
 		FlxG.cameras.add(camHUD);
+		FlxG.cameras.add(camOverlay);
 
 		FlxCamera.defaultCameras = [camGame];
 
@@ -826,28 +844,66 @@ class PlayState extends MusicBeatState
 			{
 					defaultCamZoom = 0.9;
 					curStage = 'stage';
-					var bg:FlxSprite = new FlxSprite(-600, -200).loadGraphic(Paths.image('stageback'));
-					bg.antialiasing = true;
-					bg.scrollFactor.set(0.9, 0.9);
-					bg.active = false;
-					add(bg);
 
-					var stageFront:FlxSprite = new FlxSprite(-650, 600).loadGraphic(Paths.image('stagefront'));
-					stageFront.setGraphicSize(Std.int(stageFront.width * 1.1));
-					stageFront.updateHitbox();
-					stageFront.antialiasing = true;
-					stageFront.scrollFactor.set(0.9, 0.9);
-					stageFront.active = false;
-					add(stageFront);
+					var sky:FlxSprite = new FlxSprite(-300, -100).makeGraphic(Std.int(FlxG.width * 4), Std.int(FlxG.height * 4), 0xFF58ABEB);
+					sky.antialiasing = true;
+					sky.scrollFactor.set(1, 1);
+					sky.active = false;
+					add(sky);
 
-					var stageCurtains:FlxSprite = new FlxSprite(-500, -300).loadGraphic(Paths.image('stagecurtains'));
-					stageCurtains.setGraphicSize(Std.int(stageCurtains.width * 0.9));
-					stageCurtains.updateHitbox();
-					stageCurtains.antialiasing = true;
-					stageCurtains.scrollFactor.set(1.3, 1.3);
-					stageCurtains.active = false;
+					var bgTrees:FlxSprite = new FlxSprite(-350, -250).loadGraphic(Paths.image('forest/treebg'));
+					bgTrees.antialiasing = true;
+					bgTrees.scrollFactor.set(0.85, 0.85);
+					bgTrees.active = false;
+					add(bgTrees);
 
-					add(stageCurtains);
+					hellBG = new FlxSprite(-300, 0);
+					hellBG.frames = Paths.getSparrowAtlas('forest/hell_bg');
+					hellBG.animation.addByPrefix('move', 'hell_bg', 24, false);
+					hellBG.antialiasing = true;
+					hellBG.scrollFactor.set(0.9, 0.9);
+					hellBG.setGraphicSize(Std.int(FlxG.width * 2));
+					hellBG.updateHitbox();
+					hellBG.alpha = 0;
+					add(hellBG);
+					hellBG.animation.play('move', true);
+
+					forestBallBGs = new FlxSprite(-70, 425);
+					forestBallBGs.frames = Paths.getSparrowAtlas('forest/dancingballs');
+					forestBallBGs.animation.addByPrefix('bop', 'balls group', 24, false);
+					forestBallBGs.antialiasing = true;
+					forestBallBGs.scrollFactor.set(0.9, 0.9);
+					forestBallBGs.setGraphicSize(Std.int(forestBallBGs.width * 1));
+					forestBallBGs.updateHitbox();
+					add(forestBallBGs);
+
+					forestBallhellBGs = new FlxSprite(-70, 425);
+					forestBallhellBGs.frames = Paths.getSparrowAtlas('forest/dancingballs');
+					forestBallhellBGs.animation.addByPrefix('bop', 'balls hell group', 24, false);
+					forestBallhellBGs.antialiasing = true;
+					forestBallhellBGs.scrollFactor.set(0.9, 0.9);
+					forestBallhellBGs.setGraphicSize(Std.int(forestBallhellBGs.width * 1));
+					forestBallhellBGs.updateHitbox();
+					forestBallhellBGs.alpha = 0.0;
+					add(forestBallhellBGs);
+					
+					var forestGround:FlxSprite = new FlxSprite(-580, 600).loadGraphic(Paths.image('forest/ground'));
+					forestGround.setGraphicSize(Std.int(forestGround.width * 1));
+					forestGround.updateHitbox();
+					forestGround.antialiasing = true;
+					forestGround.scrollFactor.set(0.9, 0.9);
+					forestGround.active = false;
+					add(forestGround);
+
+					//var foresthellGround:FlxSprite = new FlxSprite(-580, 600).loadGraphic(Paths.image('forest/groundhell'));
+					foresthellGround = new FlxSprite(-580, 600).loadGraphic(Paths.image('forest/groundhell'));
+					foresthellGround.setGraphicSize(Std.int(foresthellGround.width * 1));
+					foresthellGround.updateHitbox();
+					foresthellGround.antialiasing = true;
+					foresthellGround.scrollFactor.set(0.9, 0.9);
+					foresthellGround.active = false;
+					foresthellGround.alpha = 0.0;
+					add(foresthellGround);
 			}
 		}
 		var gfVersion:String = 'gf';
@@ -884,32 +940,14 @@ class PlayState extends MusicBeatState
 					camPos.x += 600;
 					tweenCamIn();
 				}
-
-			case "spooky":
-				dad.y += 200;
-			case "monster":
-				dad.y += 100;
-			case 'monster-christmas':
-				dad.y += 130;
-			case 'dad':
+			case 'flower':
 				camPos.x += 400;
-			case 'pico':
-				camPos.x += 600;
-				dad.y += 300;
-			case 'parents-christmas':
-				dad.x -= 500;
-			case 'senpai':
-				dad.x += 150;
-				dad.y += 360;
-				camPos.set(dad.getGraphicMidpoint().x + 300, dad.getGraphicMidpoint().y);
-			case 'senpai-angry':
-				dad.x += 150;
-				dad.y += 360;
-				camPos.set(dad.getGraphicMidpoint().x + 300, dad.getGraphicMidpoint().y);
-			case 'spirit':
-				dad.x -= 150;
-				dad.y += 100;
-				camPos.set(dad.getGraphicMidpoint().x + 300, dad.getGraphicMidpoint().y);
+				camPos.y += 200;
+				dad.y += 350;
+			case 'flower-hell':
+				camPos.x += 400;
+				camPos.y += 200;
+				dad.y += 350;
 		}
 
 
@@ -919,40 +957,9 @@ class PlayState extends MusicBeatState
 		// REPOSITIONING PER STAGE
 		switch (curStage)
 		{
-			case 'limo':
-				boyfriend.y -= 220;
-				boyfriend.x += 260;
-
-				resetFastCar();
-				add(fastCar);
-
-			case 'mall':
-				boyfriend.x += 200;
-
-			case 'mallEvil':
-				boyfriend.x += 320;
+			case 'stage':
 				dad.y -= 80;
-			case 'school':
-				boyfriend.x += 200;
-				boyfriend.y += 220;
-				gf.x += 180;
-				gf.y += 300;
-			case 'schoolEvil':
-				// trailArea.scrollFactor.set();
-
-				var evilTrail = new FlxTrail(dad, null, 4, 24, 0.3, 0.069);
-				// evilTrail.changeValuesEnabled(false, false, false, false);
-				// evilTrail.changeGraphic()
-				add(evilTrail);
-				// evilTrail.scrollFactor.set(1.1, 1.1);
-
-				boyfriend.x += 200;
-				boyfriend.y += 220;
-				gf.x += 180;
-				gf.y += 300;
 		}
-
-		add(gf);
 
 		// Shitty layering but whatev it works LOL
 		if (curStage == 'limo')
@@ -1042,7 +1049,7 @@ class PlayState extends MusicBeatState
 		healthBar = new FlxBar(healthBarBG.x + 4, healthBarBG.y + 4, RIGHT_TO_LEFT, Std.int(healthBarBG.width - 8), Std.int(healthBarBG.height - 8), this,
 			'health', 0, 2);
 		healthBar.scrollFactor.set();
-		healthBar.createFilledBar(0xFFFF0000, 0xFF66FF33);
+		healthBar.createFilledBar(0xFF79A7E7, 0xFF36A1BC);
 		// healthBar
 		add(healthBar);
 
@@ -1104,6 +1111,31 @@ class PlayState extends MusicBeatState
 		// cameras = [FlxG.cameras.list[1]];
 		startingSong = true;
 		
+		//LOAD SHIT HERE
+		if (curStage == 'stage')
+			{
+			//STATIC OVERLAY
+			staticOverlay = new FlxSprite(0, 0);
+			staticOverlay.frames = Paths.getSparrowAtlas('forest/hell_static','shared');
+			staticOverlay.animation.addByPrefix('idle', "hell_static", 24, true);
+			staticOverlay.scrollFactor.set(0, 0);
+			staticOverlay.setGraphicSize(1433, 806);
+			staticOverlay.alpha = 0;
+			//dumbass 1280, 720 * 1.2 is lil too big, 1.1 is a tiny bit short! 1.12 finna do it i think
+			add(staticOverlay);
+			staticOverlay.animation.play('idle');
+			staticOverlay.cameras = [camOverlay];
+
+			//HELL BG PLAY CUZ HAXEFLIXEL KINDA DUMB
+			new FlxTimer().start(1, function(hellbg:FlxTimer)
+				{
+					hellBG.animation.play('move', true);
+				}, 0);
+			}
+			
+
+
+			
 		if (isStoryMode)
 		{
 			switch (curSong.toLowerCase())
@@ -2080,6 +2112,12 @@ class PlayState extends MusicBeatState
 		perfectMode = false;
 		#end
 
+		if (shaking)
+			{
+			FlxG.camera.shake(0.003, 0.2);
+			camHUD.shake(0.005, 0.2);
+			}
+
 		if (executeModchart && lua != null && songStarted)
 		{
 			setVar('songPos',Conductor.songPosition);
@@ -2216,8 +2254,8 @@ class PlayState extends MusicBeatState
 		// FlxG.watch.addQuick('VOL', vocals.amplitudeLeft);
 		// FlxG.watch.addQuick('VOLRight', vocals.amplitudeRight);
 
-		iconP1.setGraphicSize(Std.int(FlxMath.lerp(150, iconP1.width, 0.50)));
-		iconP2.setGraphicSize(Std.int(FlxMath.lerp(150, iconP2.width, 0.50)));
+		iconP1.setGraphicSize(Std.int(FlxMath.lerp(iconP1.width, 150, 0.15)));
+		iconP2.setGraphicSize(Std.int(FlxMath.lerp(iconP2.width, 150, 0.15)));
 
 		iconP1.updateHitbox();
 		iconP2.updateHitbox();
@@ -2232,16 +2270,34 @@ class PlayState extends MusicBeatState
 
 		if (healthBar.percent < 20)
 			iconP1.animation.curAnim.curFrame = 1;
+		else if (healthBar.percent > 80)
+			iconP1.animation.curAnim.curFrame = 2;
 		else
 			iconP1.animation.curAnim.curFrame = 0;
 
 		if (healthBar.percent > 80)
 			iconP2.animation.curAnim.curFrame = 1;
+		else if (healthBar.percent < 20)
+			iconP2.animation.curAnim.curFrame = 2;
 		else
 			iconP2.animation.curAnim.curFrame = 0;
 
+
 		/* if (FlxG.keys.justPressed.NINE)
 			FlxG.switchState(new Charting()); */
+
+		#if debug
+		// health changer cheat debug
+		if (FlxG.keys.pressed.N)
+			health += 0.02;
+
+		if (FlxG.keys.pressed.M)
+			health -= 0.02;
+
+		//god mode
+		if (FlxG.keys.justPressed.G)
+			godmodecheat = !godmodecheat;
+		#end
 
 		#if debug
 		if (FlxG.keys.justPressed.EIGHT)
@@ -2487,8 +2543,124 @@ class PlayState extends MusicBeatState
 			}
 		}
 
-		if (health <= 0)
+		//MOPE EVENTS 1
+
+		if (curSong == 'Mope')
+			{
+				switch (curStep)
+				{
+					case 288:
+						staticOverlay.alpha = 1;
+
+					case 290:
+						staticOverlay.color = FlxColor.BLACK;
+						remove(dad);
+						dad = new Character(100, 350, 'flower-hell');
+						add(dad);
+						iconP2.animation.play('flower-hell');
+						forestBallhellBGs.alpha = 1.0;
+						foresthellGround.alpha = 1.0;
+
+					case 303:
+						staticOverlay.color = FlxColor.WHITE;
+						healthDrainRate = 0.0008;
+						setChrome(0.01);
+
+						//FlxG.camera.shake(0.002, 5.5);
+						//camHUD.shake((0.004), 5.5);
+
+					case 309:
+						hellBG.alpha = 0.5;
+						staticOverlay.alpha = 0.25;
+						shaking = true;
+
+					case 408:
+						remove(dad);
+						dad = new Character(100, 350, 'flower');
+						iconP2.animation.play('flower');
+						add(dad);
+						hellBG.alpha = 0.0;
+						healthDrainRate = 0.0;
+						staticOverlay.alpha = 0;
+						setChrome(0.0);
+						shaking = false;
+						forestBallhellBGs.alpha = 0.0;
+						foresthellGround.alpha = 0.0;
+
+					case 448:
+						remove(dad);
+						dad = new Character(100, 350, 'flower-hell');
+						iconP2.animation.play('flower-hell');
+						add(dad);
+						hellBG.alpha = 0.6;
+						staticOverlay.alpha = .25;
+						setChrome(0.03);
+						forestBallhellBGs.alpha = 1.0;
+						foresthellGround.alpha = 1.0;
+
+					case 449:
+						remove(dad);
+						dad = new Character(100, 350, 'flower');
+						iconP2.animation.play('flower');
+						add(dad);
+						hellBG.alpha = 0;
+						staticOverlay.alpha = 0;
+						setChrome(0.0);
+						forestBallhellBGs.alpha = 0.0;
+						foresthellGround.alpha = 0.0;
+
+					case 452:
+						remove(dad);
+						dad = new Character(100, 350, 'flower-hell');
+						iconP2.animation.play('flower-hell');
+						add(dad);
+						staticOverlay.alpha = 1;
+						setChrome(0.015);
+						shaking = true;
+						forestBallhellBGs.alpha = 1.0;
+						foresthellGround.alpha = 1.0;
+						
+
+					case 453:
+						hellBG.alpha = 1;
+						staticOverlay.alpha = .25;
+						healthDrainRate = 0.0003;
+
+					case 489:
+						staticOverlay.alpha = 1;
+
+					case 491:
+						staticOverlay.alpha = .25;
+						healthDrainRate = 0.0004;
+
+					case 640:
+						healthDrainRate = 0.0007;
+
+					case 736:
+						remove(dad);
+						dad = new Character(100, 350, 'flower');
+						iconP2.animation.play('flower');
+						add(dad);
+						staticOverlay.alpha = 0;
+						healthDrainRate = 0;	
+						setChrome(0.0);
+						shaking = false;
+						hellBG.alpha = 0.0;
+						forestBallhellBGs.alpha = 0.0;
+						foresthellGround.alpha = 0.0;
+
+					case 805:
+						staticOverlay.alpha = 1;	
+					case 807:
+						staticOverlay.color = FlxColor.BLACK;	
+				}
+			}
+
+		health -= healthDrainRate;
+
+		if (health <= 0 && godmodecheat == false)
 		{
+			setChrome(0.0);
 			boyfriend.stunned = true;
 
 			persistentUpdate = false;
@@ -2614,6 +2786,7 @@ class PlayState extends MusicBeatState
 						}
 						else
 						{
+							healthbarshake();
 							health -= 0.075;
 							vocals.volume = 0;
 							if (theFunne)
@@ -2755,6 +2928,53 @@ class PlayState extends MusicBeatState
 	var timeShown = 0;
 	var currentTimingShown:FlxText = null;
 
+	public function healthbarshake()
+		{
+		new FlxTimer().start(0.01, function(tmr:FlxTimer)
+			{
+				iconP1.y += 10;
+				iconP2.y += 10;
+				healthBar.y += 10;
+				healthBarBG.y += 10;
+			});
+			new FlxTimer().start(0.05, function(tmr:FlxTimer)
+			{
+				iconP1.y -= 15;
+				iconP2.y -= 15;
+				healthBar.y -= 15;
+				healthBarBG.y -= 15;
+			});
+			new FlxTimer().start(0.10, function(tmr:FlxTimer)
+			{
+				iconP1.y += 8;
+				iconP2.y += 8;
+				healthBar.y += 8;
+				healthBarBG.y += 8;
+			});
+			new FlxTimer().start(0.15, function(tmr:FlxTimer)
+			{
+				iconP1.y -= 5;
+				iconP2.y -= 5;
+				healthBar.y -= 5;
+				healthBarBG.y -= 5;
+			});
+			new FlxTimer().start(0.20, function(tmr:FlxTimer)
+			{
+				iconP1.y += 3;
+				iconP2.y += 3;
+				healthBar.y += 3;
+				healthBarBG.y += 3;
+			});
+			new FlxTimer().start(0.25, function(tmr:FlxTimer)
+			{
+				iconP1.y -= 1;
+				iconP2.y -= 1;
+				healthBar.y -= 1;
+				healthBarBG.y -= 1;
+			});
+		}
+
+
 	private function popUpScore(daNote:Note):Void
 		{
 			var noteDiff:Float = Math.abs(Conductor.songPosition - daNote.strumTime);
@@ -2785,7 +3005,7 @@ class PlayState extends MusicBeatState
 					score = -300;
 					combo = 0;
 					misses++;
-					health -= 0.2;
+					health -= 0.15;
 					ss = false;
 					shits++;
 					if (FlxG.save.data.accuracyMod == 0)
@@ -2793,7 +3013,7 @@ class PlayState extends MusicBeatState
 				case 'bad':
 					daRating = 'bad';
 					score = 0;
-					health -= 0.06;
+					health -= 0.05;
 					ss = false;
 					bads++;
 					if (FlxG.save.data.accuracyMod == 0)
@@ -2803,13 +3023,11 @@ class PlayState extends MusicBeatState
 					score = 200;
 					ss = false;
 					goods++;
-					if (health < 2)
-						health += 0.04;
 					if (FlxG.save.data.accuracyMod == 0)
 						totalNotesHit += 0.75;
 				case 'sick':
 					if (health < 2)
-						health += 0.1;
+						health += 0.04;
 					if (FlxG.save.data.accuracyMod == 0)
 						totalNotesHit += 1;
 					sicks++;
@@ -3413,6 +3631,7 @@ class PlayState extends MusicBeatState
 	{
 		if (!boyfriend.stunned)
 		{
+			healthbarshake();
 			health -= 0.04;
 			if (combo > 5 && gf.animOffsets.exists('sad'))
 			{
@@ -3742,6 +3961,9 @@ class PlayState extends MusicBeatState
 	{
 		super.beatHit();
 
+		FlxG.camera.setFilters([ShadersHandler.chromaticAberration]);
+		camHUD.setFilters([ShadersHandler.chromaticAberration]);
+
 		if (generatedMusic)
 		{
 			notes.sort(FlxSort.byY, FlxSort.DESCENDING);
@@ -3812,6 +4034,10 @@ class PlayState extends MusicBeatState
 
 		switch (curStage)
 		{
+			case 'stage':
+				forestBallBGs.animation.play('bop', true);
+				forestBallhellBGs.animation.play('bop', true);
+
 			case 'school':
 				bgGirls.dance();
 

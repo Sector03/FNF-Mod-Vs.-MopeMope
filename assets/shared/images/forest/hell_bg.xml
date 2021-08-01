@@ -1,0 +1,62 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="hell_bg.png">
+	<!-- Created with Adobe Animate version 21.0.0.35450 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="hell_bg0000" x="2" y="2" width="426" height="240"/>
+	<SubTexture name="hell_bg0001" x="2" y="2" width="426" height="240"/>
+	<SubTexture name="hell_bg0002" x="2" y="2" width="426" height="240"/>
+	<SubTexture name="hell_bg0003" x="430" y="2" width="426" height="240"/>
+	<SubTexture name="hell_bg0004" x="430" y="2" width="426" height="240"/>
+	<SubTexture name="hell_bg0005" x="430" y="2" width="426" height="240"/>
+	<SubTexture name="hell_bg0006" x="858" y="2" width="426" height="240"/>
+	<SubTexture name="hell_bg0007" x="858" y="2" width="426" height="240"/>
+	<SubTexture name="hell_bg0008" x="858" y="2" width="426" height="240"/>
+	<SubTexture name="hell_bg0009" x="1286" y="2" width="426" height="240"/>
+	<SubTexture name="hell_bg0010" x="1286" y="2" width="426" height="240"/>
+	<SubTexture name="hell_bg0011" x="1286" y="2" width="426" height="240"/>
+	<SubTexture name="hell_bg0012" x="2" y="244" width="426" height="240"/>
+	<SubTexture name="hell_bg0013" x="2" y="244" width="426" height="240"/>
+	<SubTexture name="hell_bg0014" x="2" y="244" width="426" height="240"/>
+	<SubTexture name="hell_bg0015" x="430" y="244" width="426" height="240"/>
+	<SubTexture name="hell_bg0016" x="430" y="244" width="426" height="240"/>
+	<SubTexture name="hell_bg0017" x="430" y="244" width="426" height="240"/>
+	<SubTexture name="hell_bg0018" x="858" y="244" width="426" height="240"/>
+	<SubTexture name="hell_bg0019" x="858" y="244" width="426" height="240"/>
+	<SubTexture name="hell_bg0020" x="858" y="244" width="426" height="240"/>
+	<SubTexture name="hell_bg0021" x="1286" y="244" width="426" height="240"/>
+	<SubTexture name="hell_bg0022" x="1286" y="244" width="426" height="240"/>
+	<SubTexture name="hell_bg0023" x="1286" y="244" width="426" height="240"/>
+	<SubTexture name="hell_bg0024" x="2" y="486" width="426" height="240"/>
+	<SubTexture name="hell_bg0025" x="2" y="486" width="426" height="240"/>
+	<SubTexture name="hell_bg0026" x="2" y="486" width="426" height="240"/>
+	<SubTexture name="hell_bg0027" x="430" y="486" width="426" height="240"/>
+	<SubTexture name="hell_bg0028" x="430" y="486" width="426" height="240"/>
+	<SubTexture name="hell_bg0029" x="430" y="486" width="426" height="240"/>
+	<SubTexture name="hell_bg0030" x="858" y="486" width="426" height="240"/>
+	<SubTexture name="hell_bg0031" x="858" y="486" width="426" height="240"/>
+	<SubTexture name="hell_bg0032" x="858" y="486" width="426" height="240"/>
+	<SubTexture name="hell_bg0033" x="1286" y="486" width="426" height="240"/>
+	<SubTexture name="hell_bg0034" x="1286" y="486" width="426" height="240"/>
+	<SubTexture name="hell_bg0035" x="1286" y="486" width="426" height="240"/>
+	<SubTexture name="hell_bg0036" x="2" y="728" width="426" height="240"/>
+	<SubTexture name="hell_bg0037" x="2" y="728" width="426" height="240"/>
+	<SubTexture name="hell_bg0038" x="2" y="728" width="426" height="240"/>
+	<SubTexture name="hell_bg0039" x="430" y="728" width="426" height="240"/>
+	<SubTexture name="hell_bg0040" x="430" y="728" width="426" height="240"/>
+	<SubTexture name="hell_bg0041" x="430" y="728" width="426" height="240"/>
+	<SubTexture name="hell_bg0042" x="858" y="728" width="426" height="240"/>
+	<SubTexture name="hell_bg0043" x="858" y="728" width="426" height="240"/>
+	<SubTexture name="hell_bg0044" x="858" y="728" width="426" height="240"/>
+	<SubTexture name="hell_bg0045" x="1286" y="728" width="426" height="240"/>
+	<SubTexture name="hell_bg0046" x="1286" y="728" width="426" height="240"/>
+	<SubTexture name="hell_bg0047" x="1286" y="728" width="426" height="240"/>
+	<SubTexture name="hell_bg0048" x="2" y="970" width="426" height="240"/>
+	<SubTexture name="hell_bg0049" x="2" y="970" width="426" height="240"/>
+	<SubTexture name="hell_bg0050" x="2" y="970" width="426" height="240"/>
+	<SubTexture name="hell_bg0051" x="430" y="970" width="426" height="240"/>
+	<SubTexture name="hell_bg0052" x="430" y="970" width="426" height="240"/>
+	<SubTexture name="hell_bg0053" x="430" y="970" width="426" height="240"/>
+	<SubTexture name="hell_bg0054" x="858" y="970" width="426" height="240"/>
+	<SubTexture name="hell_bg0055" x="858" y="970" width="426" height="240"/>
+	<SubTexture name="hell_bg0056" x="858" y="970" width="426" height="240"/>
+</TextureAtlas>

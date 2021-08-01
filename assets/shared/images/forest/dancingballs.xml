@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="dancingballs.png">
+	<!-- Created with Adobe Animate version 21.0.0.35450 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="balls group0000" x="2" y="2" width="1470" height="278"/>
+	<SubTexture name="balls group0001" x="2" y="2" width="1470" height="278"/>
+	<SubTexture name="balls group0002" x="2" y="282" width="1470" height="278"/>
+	<SubTexture name="balls group0003" x="2" y="282" width="1470" height="278"/>
+	<SubTexture name="balls group0004" x="2" y="562" width="1470" height="278"/>
+	<SubTexture name="balls group0005" x="2" y="562" width="1470" height="278"/>
+	<SubTexture name="balls group0006" x="2" y="562" width="1470" height="278"/>
+	<SubTexture name="balls group0007" x="2" y="562" width="1470" height="278"/>
+	<SubTexture name="balls group0008" x="2" y="562" width="1470" height="278"/>
+	<SubTexture name="balls group0009" x="2" y="562" width="1470" height="278"/>
+	<SubTexture name="balls group0010" x="2" y="562" width="1470" height="278"/>
+	<SubTexture name="balls group0011" x="2" y="562" width="1470" height="278"/>
+	<SubTexture name="balls group0012" x="2" y="562" width="1470" height="278"/>
+	<SubTexture name="balls group0013" x="2" y="562" width="1470" height="278"/>
+	<SubTexture name="balls hell group0000" x="2" y="842" width="1470" height="278"/>
+	<SubTexture name="balls hell group0001" x="2" y="842" width="1470" height="278"/>
+	<SubTexture name="balls hell group0002" x="2" y="1122" width="1470" height="278"/>
+	<SubTexture name="balls hell group0003" x="2" y="1122" width="1470" height="278"/>
+	<SubTexture name="balls hell group0004" x="2" y="1402" width="1470" height="278"/>
+	<SubTexture name="balls hell group0005" x="2" y="1402" width="1470" height="278"/>
+	<SubTexture name="balls hell group0006" x="2" y="1402" width="1470" height="278"/>
+	<SubTexture name="balls hell group0007" x="2" y="1402" width="1470" height="278"/>
+	<SubTexture name="balls hell group0008" x="2" y="1402" width="1470" height="278"/>
+	<SubTexture name="balls hell group0009" x="2" y="1402" width="1470" height="278"/>
+	<SubTexture name="balls hell group0010" x="2" y="1402" width="1470" height="278"/>
+	<SubTexture name="balls hell group0011" x="2" y="1402" width="1470" height="278"/>
+	<SubTexture name="balls hell group0012" x="2" y="1402" width="1470" height="278"/>
+	<SubTexture name="balls hell group0013" x="2" y="1402" width="1470" height="278"/>
+</TextureAtlas>
